@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Wezo</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    .tab {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+    .tab:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wezo</h1>
+
+  <div class="tabs">
+    <div class="tab" id="flavor1">
+      Geschmack 1
+      <div class="percentage"></div>
+    </div>
+    <div class="tab" id="flavor2">
+      Geschmack 2
+      <div class="percentage"></div>
+    </div>
+    <div class="tab" id="flavor3">
+      Geschmack 3
+      <div class="percentage"></div>
+    </div>
+  </div>
+
+  <script>
+    let flavorVotes = {
+      flavor1: 0,
+      flavor2: 0,
+      flavor3: 0
+    };
+    let totalVotes = 0;
+
+    function updatePercentages() {
+      for (const [flavor, votes] of Object.entries(flavorVotes)) {
+        const percentage = totalVotes ? ((votes / totalVotes) * 100).toFixed(2) : 0;
+        document.querySelector(`#${flavor} .percentage`).textContent = `${percentage}% der Befragten`;
+      }
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const flavorId = this.id;
+        flavorVotes[flavorId]++;
+        totalVotes++;
+        updatePercentages();
+      });
+    });
+
+    // Initial percentages update
+    updatePercentages();
+  </script>
+</body>
+</html>
